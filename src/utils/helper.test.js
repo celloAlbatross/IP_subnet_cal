@@ -9,7 +9,8 @@ import {
     convertToIpv4,
     ipv4ToBinary,
     broadCastAddress,
-    wildCardConverter
+    wildCardConverter,
+    binarySubnetMask
 } from './helper';
 
 describe('test add', () => {
@@ -75,5 +76,12 @@ describe('calculate wildCard', () => {
     it('should calculate wildCard', () => {
         expect(wildCardConverter("255.255.255.0")).to.equal("0.0.0.255");
         expect(wildCardConverter("255.255.240.0")).to.equal("0.0.15.255");
+    })
+})
+
+describe('test binary subnetmask', () => {
+    it('should convert to binary subnet mask', () => {
+        expect(binarySubnetMask(32)).to.equal("11111111.11111111.11111111.11111111");
+        expect(binarySubnetMask(20)).to.equal("11111111.11111111.11110000.00000000");
     })
 })

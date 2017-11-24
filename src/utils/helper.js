@@ -79,6 +79,18 @@ export function convertToSubnet(n) {
     return res;
 }
 
+export function binarySubnetMask(n) {
+    var binary = convertToSubnet(n);
+    var res = "";
+    for(var i=0; i<binary.length; i++) {
+        res += binary[i];
+        if(i == 7 || i == 15 || i == 23 ) {
+            res += ".";
+        }
+    }
+    return res;
+}
+
 export function numOfUsableHosts(n) {
     return (totalNumOfHost(n)-2)<0 ? 0:(totalNumOfHost(n)-2);
 }
