@@ -10,7 +10,9 @@ import {
     ipv4ToBinary,
     broadCastAddress,
     wildCardConverter,
-    binarySubnetMask
+    binarySubnetMask,
+    ipClass,
+    decimalToHex
 } from './helper';
 
 describe('test add', () => {
@@ -34,6 +36,7 @@ describe('test binary converter', () => {
 describe('test decimal converter', () => {
     it('should convert to decimal', () => {
         expect(binaryToDecimal("11")).to.equal(3);
+        expect(binaryToDecimal("11111111111111110000000000001110")).to.equal(4294901774)
     })
 })
 
@@ -62,6 +65,8 @@ describe('test ipv4toBi converter', () => {
     it('should convert to binary (from Ipv4)', () => {
         expect(ipv4ToBinary("128.0.0.0")).to.equal("10000000000000000000000000000000");
         expect(ipv4ToBinary("192.0.0.0")).to.equal("11000000000000000000000000000000");
+        expect(ipv4ToBinary("255.255.0.14")).to.equal("11111111111111110000000000001110");
+        
     })
 })
 
@@ -83,5 +88,19 @@ describe('test binary subnetmask', () => {
     it('should convert to binary subnet mask', () => {
         expect(binarySubnetMask(32)).to.equal("11111111.11111111.11111111.11111111");
         expect(binarySubnetMask(20)).to.equal("11111111.11111111.11110000.00000000");
+    })
+})
+
+describe('test IP class', () => {
+    it('should cal IP class', () => {
+        expect(ipClass(16)).to.equal("B");
+        expect(ipClass(32)).to.equal("C");
+        expect(ipClass(1)).to.equal("NA");
+    })
+})
+
+describe('test decimal to hex', () => {
+    it('should convert to hex', () => {
+        expect(decimalToHex(4294901774)).to.equal("0xffff000e");
     })
 })

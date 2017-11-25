@@ -123,4 +123,20 @@ export function wildCardConverter(subnetMask) {
     return wildCard;
 }
 
+ export function ipClass(n) {
+     if(n > 23) {
+         return "C";
+     } else if(n > 15) {
+         return "B";
+     } else if(n > 7) {
+         return "A";
+     } else {
+         return "NA";
+     }
+ }
+
+ export function decimalToHex(decimal) {
+     console.log("0x" + decimal.toString(16));
+     return "0x"+decimal.toString(16);
+ } 
 
