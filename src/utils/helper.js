@@ -163,9 +163,9 @@ export function splitClass(ipClass) {
  export function decimalToHex(decimal) {
     //  console.log("0x" + decimal.toString(16));
      return "0x"+decimal.toString(16);
- } 
+} 
 
- export function reverseIpv4(ipv4) {
+export function reverseIpv4(ipv4) {
      var point = [-1];
      var arpa = "";
      for(var i=0; i<ipv4.length; i++) {
@@ -186,7 +186,7 @@ export function splitClass(ipClass) {
         }
      }
      return arpa + "in-addr.arpa";
- }
+}
 
  export function networkAddress(subnetMask, ipAddress) {
      var tempIP = ipv4ToBinary(ipAddress);
@@ -200,8 +200,10 @@ export function splitClass(ipClass) {
          } 
      }
      return convertToIpv4(res);
- }
+}
 
- export function usableRange(network, broadCast) {
 
- }
+
+export function usableRange(network, broadCast) {
+
+}

@@ -27,7 +27,6 @@ class App extends Component {
     checked: false,
     ipAddress: "0.0.0.0",
     subnetIpv4: "255.255.255.255",
-
   }
 
   handleInput = e => {
@@ -70,6 +69,9 @@ class App extends Component {
       networkAdd: networkAddress(this.state.subnetIpv4, this.state.ipAddress),
       wildCard: wildCardConverter(this.state.subnetIpv4),
       ip_class: ipClass(this.state.subnetBit),
+      binaryID: ipv4ToBinary(this.state.ipAddress),
+      integerID: binaryToDecimal(ipv4ToBinary(this.state.ipAddress)),
+      hexID: decimalToHex(binaryToDecimal(ipv4ToBinary(this.state.ipAddress))),
     })
   }
   
@@ -163,6 +165,18 @@ class App extends Component {
               <tr>
                 <td>Short</td>
                 <td>{this.state.showIP} / {this.state.subnetBit}</td>
+              </tr>
+              <tr>
+                <td>Binary ID</td>
+                <td>{this.state.binaryID}</td>
+              </tr>
+              <tr>
+                <td>Integer ID</td>
+                <td>{this.state.integerID}</td>
+              </tr>
+              <tr>
+                <td>Hex ID</td>
+                <td>{this.state.hexID}</td>
               </tr>
             </tbody>
         </table>
