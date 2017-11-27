@@ -62,12 +62,14 @@ class App extends Component {
     this.setState({
       checked: true,
       showIP: this.state.ipAddress,
+      showSubnetBit: this.state.subnetBit,
       binarySubnet: binarySubnetMask(this.state.subnetBit),
       broadCast: broadCastAddress(this.state.subnetBit, this.state.ipAddress),
       totalNumHost: totalNumOfHost(this.state.subnetBit),
       numUsableHost: numOfUsableHosts(this.state.subnetBit),
-      networkAdd: networkAddress(this.state.subnetIpv4, this.state.ipAddress)
-
+      networkAdd: networkAddress(this.state.subnetIpv4, this.state.ipAddress),
+      wildCard: wildCardConverter(this.state.subnetIpv4),
+      ip_class: ipClass(this.state.subnetBit),
     })
   }
   
@@ -146,7 +148,18 @@ class App extends Component {
                 <td>Number of Usable Hosts</td>
                 <td>{this.state.numUsableHost}</td>
               </tr>
-              
+              <tr>
+                <td>Wild Card</td>
+                <td>{this.state.wildCard}</td>
+              </tr>
+              <tr>
+                <td>IP Class</td>
+                <td>{this.state.ip_class}</td>
+              </tr>
+              <tr>
+                <td>CIDR Notation</td>
+                <td>/ {this.state.showSubnetBit}</td>
+              </tr>
             </tbody>
         </table>
         }
