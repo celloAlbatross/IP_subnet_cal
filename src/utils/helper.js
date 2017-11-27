@@ -140,19 +140,19 @@ export function ipClass(n) {
 export function splitClass(ipClass) {
     var res = [];
     if(ipClass == "Any") {
-         for(var i=1; i<=32; i++) {
+         for(var i=32; i>=1; i--) {
             res.push(convertToIpv4(convertToSubnet(i)));
         }
     } else if(ipClass == "A") {
-         for(var i=8; i<=32; i++) {
+         for(var i=32; i>=8; i--) {
             res.push(convertToIpv4(convertToSubnet(i)));
         }
     } else if(ipClass == "B") {
-        for(var i=16; i<=32; i++) {
+        for(var i=32; i>=16; i--) {
            res.push(convertToIpv4(convertToSubnet(i)));
         }
     } else if(ipClass == "C") {
-        for(var i=24; i<=32; i++) {
+        for(var i=32; i>=24; i--) {
            res.push(convertToIpv4(convertToSubnet(i)));
         }
     }

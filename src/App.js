@@ -24,8 +24,10 @@ class App extends Component {
   state = {
     subnetList: splitClass("Any"),
     subnetBit: 32,
-    binarySubnet: "0.0.0.0",
     checked: false,
+    ipAddress: "0.0.0.0",
+    subnetIpv4: "255.255.255.255",
+
   }
 
   handleInput = e => {
@@ -59,7 +61,13 @@ class App extends Component {
     console.log(binarySubnetMask(this.state.subnetBit))
     this.setState({
       checked: true,
+      showIP: this.state.ipAddress,
       binarySubnet: binarySubnetMask(this.state.subnetBit),
+      broadCast: broadCastAddress(this.state.subnetBit, this.state.ipAddress),
+      totalNumHost: totalNumOfHost(this.state.subnetBit),
+      numUsableHost: numOfUsableHosts(this.state.subnetBit),
+      networkAdd: networkAddress(this.state.subnetIpv4, this.state.ipAddress)
+
     })
   }
   
@@ -67,6 +75,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          {/* <h1 className="App-title">IP Subnet Calculator</h1> */}
           <h1 className="App-title">IP Subnet Calculator</h1>
         </header>
 
@@ -93,7 +102,7 @@ class App extends Component {
           <select onChange={this.handleDropdown}>
             {
               this.state.subnetList.map((element, i) => 
-                <option value={[element, i+1]}>{element += ' / ' + (i + 1).toString() }</option>
+                <option value={[element, 32 - i]}>{element += ' / ' + (32 - i).toString() }</option>
             )}
           </select>
         </div>
@@ -114,9 +123,30 @@ class App extends Component {
         <table class="table">
             <tbody>
               <tr>
-                <td>BinarySubnet</td>
+                  <td>IP Address</td>
+                  <td>{this.state.showIP}</td>
+              </tr>
+              <tr>
+                <td>Network Address</td>
+                <td>{this.state.networkAdd}</td>
+              </tr>
+              <tr>
+                <td>Binary Subnet Mask</td>
                 <td>{this.state.binarySubnet}</td>
               </tr>
+              <tr>
+                <td>Broadcast Address</td>
+                <td>{this.state.broadCast}</td>
+              </tr>
+              <tr>
+                <td>Total Number of Hosts</td>
+                <td>{this.state.totalNumHost}</td>
+              </tr>
+              <tr>
+                <td>Number of Usable Hosts</td>
+                <td>{this.state.numUsableHost}</td>
+              </tr>
+              
             </tbody>
         </table>
         }
