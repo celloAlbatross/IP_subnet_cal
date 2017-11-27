@@ -1,18 +1,125 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { 
+  add,
+  totalNumOfHost,
+  decimalToBinary,
+  binaryToDecimal,
+  convertToSubnet,
+  numOfUsableHosts,
+  convertToIpv4,
+  ipv4ToBinary,
+  broadCastAddress,
+  wildCardConverter,
+  binarySubnetMask,
+  ipClass,
+  decimalToHex,
+  reverseIpv4,
+  networkAddress,
+  splitClass
+} from './utils/helper';
 
 class App extends Component {
+  state = {
+    subnetList: splitClass("Any"),
+    subnetBit: 32,
+    binarySubnet: "0.0.0.0",
+    checked: false,
+  }
+
+  handleInput = e => {
+    console.log(e.target.value)
+    this.setState({
+      ipAddress: e.target.value,
+    })
+  }
+
+  handleDropdown = e => {
+    var temp = e.target.value.split(',')
+    console.log(temp)
+    // console.log(e.target.value)
+    this.setState({
+      subnetIpv4: temp[0],
+      subnetBit: parseInt(temp[1]),
+    })
+  }
+
+  handleRadioButton = e => {
+    console.log(e.target.value)
+    console.log(splitClass(e.target.value))
+    this.setState({
+      subnetClass: e.target.value,
+      subnetList: splitClass(e.target.value),
+    })
+  }
+
+  handleCalButton = e => {
+    // console.log(this.state.subnetBit)
+    console.log(binarySubnetMask(this.state.subnetBit))
+    this.setState({
+      checked: true,
+      binarySubnet: binarySubnetMask(this.state.subnetBit),
+    })
+  }
+  
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">IP Subnet Calculator</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+
+        <div className="radio-group">
+          <label> 
+            <input type="radio" name="subclass" value="Any" onChange={this.handleRadioButton}/>
+            Any
+          </label>
+          <label>
+            <input type="radio" name="subclass" value="A" onChange={this.handleRadioButton}/>
+            A
+          </label>
+          <label>
+            <input type="radio" name="subclass" value="B" onChange={this.handleRadioButton}/>
+            B
+          </label>
+          <label>
+            <input type="radio" name="subclass" value="C" onChange={this.handleRadioButton}/>
+            C
+          </label>    
+        </div>
+
+        <div className="dropDown">
+          <select onChange={this.handleDropdown}>
+            {
+              this.state.subnetList.map((element, i) => 
+                <option value={[element, i+1]}>{element += ' / ' + (i + 1).toString() }</option>
+            )}
+          </select>
+        </div>
+
+        <div className="inputIP">
+            <label>
+              IP Address
+            </label>
+            <input type="text" class="form-control" onChange={this.handleInput}/>
+        </div>
+
+        <div className="button calculate">
+            <button type="button" class="btn btn-primary" onClick={this.handleCalButton}>Calculate</button>
+        </div>
+        
+        {
+          this.state.checked &&
+        <table class="table">
+            <tbody>
+              <tr>
+                <td>BinarySubnet</td>
+                <td>{this.state.binarySubnet}</td>
+              </tr>
+            </tbody>
+        </table>
+        }
       </div>
     );
   }

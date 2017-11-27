@@ -1,3 +1,5 @@
+const max = binaryToDecimal("11111111111111111111111111111111");
+
 export function add(a, b) {
     return a+b;
 }
@@ -111,7 +113,7 @@ export function broadCastAddress(subnetMask, IPaddress) {
 export function wildCardConverter(subnetMask) {
     var wildCard="";
     var temp = ~(binaryToDecimal(ipv4ToBinary(subnetMask)));
-    console.log(temp);
+    // console.log(temp);
     temp = temp&4294967295;
     temp = decimalToBinary(temp);
     var zero = 32 - temp.length;
@@ -119,11 +121,11 @@ export function wildCardConverter(subnetMask) {
     wildCard += tempZero;
     wildCard += temp;
     wildCard = convertToIpv4(wildCard);
-    console.log(wildCard);
+    // console.log(wildCard);
     return wildCard;
 }
 
- export function ipClass(n) {
+export function ipClass(n) {
      if(n > 23) {
          return "C";
      } else if(n > 15) {
@@ -133,10 +135,73 @@ export function wildCardConverter(subnetMask) {
      } else {
          return "NA";
      }
- }
+}
+
+export function splitClass(ipClass) {
+    var res = [];
+    if(ipClass == "Any") {
+         for(var i=1; i<=32; i++) {
+            res.push(convertToIpv4(convertToSubnet(i)));
+        }
+    } else if(ipClass == "A") {
+         for(var i=8; i<=32; i++) {
+            res.push(convertToIpv4(convertToSubnet(i)));
+        }
+    } else if(ipClass == "B") {
+        for(var i=16; i<=32; i++) {
+           res.push(convertToIpv4(convertToSubnet(i)));
+        }
+    } else if(ipClass == "C") {
+        for(var i=24; i<=32; i++) {
+           res.push(convertToIpv4(convertToSubnet(i)));
+        }
+    }
+
+    return res;
+}
 
  export function decimalToHex(decimal) {
-     console.log("0x" + decimal.toString(16));
+    //  console.log("0x" + decimal.toString(16));
      return "0x"+decimal.toString(16);
  } 
 
+ export function reverseIpv4(ipv4) {
+     var point = [-1];
+     var arpa = "";
+     for(var i=0; i<ipv4.length; i++) {
+        if(ipv4[i] == ".") {
+            point.push(i);
+        }
+     }
+     for(var i=0; i<4; i++) {
+        //  console.log(point[i]);
+     }
+     for(var i=3; i>=0; i--) {
+        for(var j=1; j<=4; j++) {
+            if(ipv4[point[i]+j] == "." || point[i]+j == ipv4.length) {
+                arpa += ".";
+                break;
+            }
+            arpa += ipv4[point[i]+j];
+        }
+     }
+     return arpa + "in-addr.arpa";
+ }
+
+ export function networkAddress(subnetMask, ipAddress) {
+     var tempIP = ipv4ToBinary(ipAddress);
+     var tempSub = ipv4ToBinary(subnetMask);
+     var res = "";
+     for(var i=0; i<32; i++) {
+         if(tempIP[i] == tempSub[i]) {
+             res += tempIP[i];
+         } else {
+             res += "0";
+         } 
+     }
+     return convertToIpv4(res);
+ }
+
+ export function usableRange(network, broadCast) {
+
+ }

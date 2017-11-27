@@ -12,7 +12,9 @@ import {
     wildCardConverter,
     binarySubnetMask,
     ipClass,
-    decimalToHex
+    decimalToHex,
+    reverseIpv4,
+    networkAddress
 } from './helper';
 
 describe('test add', () => {
@@ -102,5 +104,18 @@ describe('test IP class', () => {
 describe('test decimal to hex', () => {
     it('should convert to hex', () => {
         expect(decimalToHex(4294901774)).to.equal("0xffff000e");
+    })
+})
+
+describe('test in-add arpa', () => {
+    it('should reverse ipv4', () => {
+        expect(reverseIpv4("255.0.0.0")).to.equal("0.0.0.255.in-addr.arpa");
+        expect(reverseIpv4("255.255.0.14")).to.equal("14.0.255.255.in-addr.arpa");
+    })
+})
+
+describe('test network address', () => {
+    it('should convert to network address', () => {
+        expect(networkAddress("255.255.255.255","255.255.0.8")).to.equal("255.255.0.8");
     })
 })
