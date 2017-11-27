@@ -160,6 +160,10 @@ class App extends Component {
                 <td>CIDR Notation</td>
                 <td>/ {this.state.showSubnetBit}</td>
               </tr>
+              <tr>
+                <td>Short</td>
+                <td>{this.state.showIP} / {this.state.subnetBit}</td>
+              </tr>
             </tbody>
         </table>
         }
