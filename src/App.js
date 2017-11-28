@@ -30,6 +30,7 @@ class App extends Component {
     checked: false,
     ipAddress: "0.0.0.0",
     subnetIpv4: "255.255.255.255",
+    subnetClass: "Any",
   }
 
   handleInput = e => {
@@ -93,7 +94,7 @@ class App extends Component {
 
         <div className="radio-group">
           <label> 
-            <input type="radio" name="subclass" value="Any" onChange={this.handleRadioButton}/>
+            <input type="radio" checked={this.state.subnetClass === 'Any'} name="subclass" value="Any" onChange={this.handleRadioButton}/>
             Any
           </label>
           <label>
@@ -198,7 +199,12 @@ class App extends Component {
             </tbody>
         </table>
         
-        <table>
+        <table class="table">
+          <tr>
+            <td>Network Address</td>
+            <td>Usable Host Range</td>
+            <td>Broadcast Address</td>
+          </tr>
           {
             this.state.data.map((d) => (
               <tr>
