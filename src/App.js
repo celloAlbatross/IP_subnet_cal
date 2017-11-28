@@ -17,7 +17,9 @@ import {
   decimalToHex,
   reverseIpv4,
   networkAddress,
-  splitClass
+  splitClass,
+  usableRange,
+  ipTypeClassifier
 } from './utils/helper';
 
 class App extends Component {
@@ -72,6 +74,10 @@ class App extends Component {
       binaryID: ipv4ToBinary(this.state.ipAddress),
       integerID: binaryToDecimal(ipv4ToBinary(this.state.ipAddress)),
       hexID: decimalToHex(binaryToDecimal(ipv4ToBinary(this.state.ipAddress))),
+      usableHostRange: usableRange(networkAddress(this.state.subnetIpv4, this.state.ipAddress),
+                                   broadCastAddress(this.state.subnetBit, this.state.ipAddress),
+                                   this.state.subnetBit),
+      ipType: ipTypeClassifier(this.state.ipAddress),
     })
   }
   
@@ -111,11 +117,11 @@ class App extends Component {
           </select>
         </div>
 
-        <div className="inputIP">
+        <div class="input-box">
             <label>
               IP Address
             </label>
-            <input type="text" class="form-control" onChange={this.handleInput}/>
+            <input style={{width:'40%',color:'green'}} type="text" class="form-control inputIP" onChange={this.handleInput}/>
         </div>
 
         <div className="button calculate">
@@ -135,8 +141,16 @@ class App extends Component {
                 <td>{this.state.networkAdd}</td>
               </tr>
               <tr>
+                <td>Usable Host IP Range</td>
+                <td>{this.state.usableHostRange}</td>
+              </tr>
+              <tr>
                 <td>Binary Subnet Mask</td>
                 <td>{this.state.binarySubnet}</td>
+              </tr>
+              <tr>
+                <td>IP Type</td>
+                <td>{this.state.ipType}</td>
               </tr>
               <tr>
                 <td>Broadcast Address</td>

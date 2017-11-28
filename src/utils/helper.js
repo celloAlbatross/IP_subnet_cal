@@ -202,8 +202,54 @@ export function reverseIpv4(ipv4) {
      return convertToIpv4(res);
 }
 
+export function fillZero(binary) {
+    var numZero = 32 - binary.length;
+    var res = "";
+    for(var i=0; i<numZero; i++) {
+        res += 0;
+    }
+    for(var i=0; i<binary.length; i++) {
+        res += binary[i];
+    }
+    return res;
+}
 
+export function usableRange(network, broadCast, n) {
+    var min = binaryToDecimal(ipv4ToBinary(network)) + 1;
+    var max = binaryToDecimal(ipv4ToBinary(broadCast)) - 1;
+    if(n > 30) {
+        return "NA";
+    } else {
+        min = convertToIpv4(fillZero(decimalToBinary(min)));
+        max = convertToIpv4(fillZero(decimalToBinary(max)));
+        // console.log(min);
+        // console.log(max);
+        return min + " - " + max;
+    }
+}
 
-export function usableRange(network, broadCast) {
+export function ipv4ToDecimal(ipv4) {
+    var res = ipv4ToBinary(ipv4);
+    res = binaryToDecimal(res);
+    return res;
+}
 
+export function ipTypeClassifier(ipAddress) {
+    var privateAddress = [];
+    privateAddress.push(ipv4ToDecimal("10.0.0.0"));
+    privateAddress.push(ipv4ToDecimal("10.255.255.255"));
+    privateAddress.push(ipv4ToDecimal("172.16.0.0"));
+    privateAddress.push(ipv4ToDecimal("172.31.255.255"));
+    privateAddress.push(ipv4ToDecimal("192.168.0.0"));
+    privateAddress.push(ipv4ToDecimal("192.168.255.255"));
+    ipAddress = ipv4ToDecimal(ipAddress)
+    if(ipAddress >= privateAddress[0] && ipAddress <= privateAddress[1]) {
+        return "Private";
+    } else if(ipAddress >= privateAddress[2] && ipAddress <= privateAddress[3]) {
+        return "Private";
+    } else if(ipAddress >= privateAddress[4] && ipAddress <= privateAddress[5]) {
+        return "Private";
+    } else {
+        return "Public";
+    }
 }

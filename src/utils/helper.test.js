@@ -14,7 +14,9 @@ import {
     ipClass,
     decimalToHex,
     reverseIpv4,
-    networkAddress
+    networkAddress,
+    usableRange,
+    ipTypeClassifier
 } from './helper';
 
 describe('test add', () => {
@@ -117,5 +119,17 @@ describe('test in-add arpa', () => {
 describe('test network address', () => {
     it('should convert to network address', () => {
         expect(networkAddress("255.255.255.255","255.255.0.8")).to.equal("255.255.0.8");
+    })
+})
+
+describe('test usable range', () => {
+    it('should convert to network usable range', () => {
+        expect(usableRange("255.255.255.252","255.255.255.255",30)).to.equal("255.255.255.253 - 255.255.255.254");
+    })
+})
+
+describe('test ip-type classifire', () => {
+    it('should classifier ip-type', () => {
+        expect(ipTypeClassifier("9.255.1.0")).to.equal("Public");
     })
 })
