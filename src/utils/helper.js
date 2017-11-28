@@ -253,3 +253,66 @@ export function ipTypeClassifier(ipAddress) {
         return "Public";
     }
 }
+
+export function possibleNetworkAddress(n, ipAddress) {
+    var rangeIp;
+    var res = [];
+    var temp;
+    var x=0;
+    var resTemp;
+    temp = ipAddress.split(".");
+    if(n <= 30 && n >= 25) {
+        rangeIp = totalNumOfHost(n);
+        resTemp = temp[0] + "." + temp[1] + "." + temp[2] + ".";
+        for(var i=0; i<130; i++) {
+            if(x > 255) {
+                break;
+            } 
+            res.push(resTemp+x);
+            x += rangeIp;
+        }
+
+    } else if(n <= 23 && n >= 17) {
+        n += 8;
+        rangeIp = totalNumOfHost(n);
+        resTemp = temp[0] + "." + temp[1] + ".";
+        for(var i=0; i<130; i++) {
+            if(x > 255) {
+                break;
+            }
+            res.push();
+            x += rangeIp;
+        }
+    } else if(n <= 15 && n >= 9) {
+        n += 16;
+        rangeIp = totalNumOfHost(n);
+        resTemp = temp[0] + ".";
+        for(var i=0; i<130; i++) {
+            if(x > 255) {
+                break;
+            }
+            res.push(resTemp + x + ".0.0");
+            x += rangeIp;
+        }
+    } else if(n <= 7 && n >= 1) {
+        n += 24;
+        rangeIp = totalNumOfHost(n);
+        for(var i=0; i<130; i++) {
+            if(x > 255) {
+                break;
+            }
+            res.push(x + ".0.0.0");
+            x += rangeIp;
+        }
+    }
+    console.log(res);
+    var b = broadCastAddress(4,res[3]);
+    console.log(b);
+    console.log(usableRange(res[3],b, 4));
+    
+    return res;
+}
+
+export function possibleUsableRange(networkAddress) {
+    
+}

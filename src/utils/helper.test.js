@@ -16,7 +16,8 @@ import {
     reverseIpv4,
     networkAddress,
     usableRange,
-    ipTypeClassifier
+    ipTypeClassifier,
+    possibleNetworkAddress
 } from './helper';
 
 describe('test add', () => {
@@ -131,5 +132,11 @@ describe('test usable range', () => {
 describe('test ip-type classifire', () => {
     it('should classifier ip-type', () => {
         expect(ipTypeClassifier("9.255.1.0")).to.equal("Public");
+    })
+})
+
+describe('test possible ipNetwork', () => {
+    it('should show array of possible ipnetWork', () => {
+        expect(possibleNetworkAddress(4,"192.255.168.0")).to.equal();
     })
 })
