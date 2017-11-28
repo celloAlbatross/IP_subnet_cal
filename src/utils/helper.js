@@ -260,6 +260,7 @@ export function possibleNetworkAddress(n, ipAddress) {
     var temp;
     var x=0;
     var resTemp;
+    var tempN = n;
     temp = ipAddress.split(".");
     if(n <= 30 && n >= 25) {
         rangeIp = totalNumOfHost(n);
@@ -267,8 +268,16 @@ export function possibleNetworkAddress(n, ipAddress) {
         for(var i=0; i<130; i++) {
             if(x > 255) {
                 break;
-            } 
-            res.push(resTemp+x);
+            }
+            var tempNetwork = resTemp+x;
+            var tempBroadCast = broadCastAddress(tempN, tempNetwork);
+            var data = {
+                networkAddress: tempNetwork,
+                broadCastAdd: tempBroadCast,
+                use: usableRange(tempNetwork, tempBroadCast, tempN) 
+            };
+            res.push(data); 
+            // res.push(resTemp+x);
             x += rangeIp;
         }
 
@@ -280,7 +289,15 @@ export function possibleNetworkAddress(n, ipAddress) {
             if(x > 255) {
                 break;
             }
-            res.push();
+            var tempNetwork = resTemp + x + ".0";
+            var tempBroadCast = broadCastAddress(tempN, tempNetwork);
+            var data = {
+                networkAddress: tempNetwork,
+                broadCastAdd: tempBroadCast,
+                use: usableRange(tempNetwork, tempBroadCast, tempN) 
+            };
+            res.push(data);
+            // res.push();
             x += rangeIp;
         }
     } else if(n <= 15 && n >= 9) {
@@ -291,7 +308,15 @@ export function possibleNetworkAddress(n, ipAddress) {
             if(x > 255) {
                 break;
             }
-            res.push(resTemp + x + ".0.0");
+            var tempNetwork = resTemp + x + ".0.0";
+            var tempBroadCast = broadCastAddress(tempN, tempNetwork);
+            var data = {
+                networkAddress: tempNetwork,
+                broadCastAdd: tempBroadCast,
+                use: usableRange(tempNetwork, tempBroadCast, tempN) 
+            };
+            res.push(data);
+            // res.push(resTemp + x + ".0.0");
             x += rangeIp;
         }
     } else if(n <= 7 && n >= 1) {
@@ -301,18 +326,25 @@ export function possibleNetworkAddress(n, ipAddress) {
             if(x > 255) {
                 break;
             }
-            res.push(x + ".0.0.0");
+            var tempNetwork = x + ".0.0.0";
+            var tempBroadCast = broadCastAddress(tempN, tempNetwork);
+            var data = {
+                networkAddress: tempNetwork,
+                broadCastAdd: tempBroadCast,
+                use: usableRange(tempNetwork, tempBroadCast, tempN) 
+            };
+            res.push(data);
             x += rangeIp;
         }
     }
-    console.log(res);
-    var b = broadCastAddress(4,res[3]);
-    console.log(b);
-    console.log(usableRange(res[3],b, 4));
-    
+    // console.log(res);
+    // var b = broadCastAddress(4,res[3]);
+    // console.log(b);
+    // console.log(usableRange(res[3],b, 4));
+
+    // console.log(res[1].networkAddress);
+    // console.log(res[1].broadCastAdd);
+    // console.log(res[1].use);
     return res;
 }
 
-export function possibleUsableRange(networkAddress) {
-    
-}

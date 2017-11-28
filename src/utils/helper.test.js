@@ -137,6 +137,6 @@ describe('test ip-type classifire', () => {
 
 describe('test possible ipNetwork', () => {
     it('should show array of possible ipnetWork', () => {
-        expect(possibleNetworkAddress(4,"192.255.168.0")).to.equal();
+        expect(possibleNetworkAddress(28,"192.255.168.0")).to.equal();
     })
 })

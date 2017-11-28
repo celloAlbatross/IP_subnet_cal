@@ -19,7 +19,8 @@ import {
   networkAddress,
   splitClass,
   usableRange,
-  ipTypeClassifier
+  ipTypeClassifier,
+  possibleNetworkAddress
 } from './utils/helper';
 
 class App extends Component {
@@ -78,6 +79,7 @@ class App extends Component {
                                    broadCastAddress(this.state.subnetBit, this.state.ipAddress),
                                    this.state.subnetBit),
       ipType: ipTypeClassifier(this.state.ipAddress),
+      data: possibleNetworkAddress(this.state.subnetBit, this.state.ipAddress)
     })
   }
   
@@ -130,7 +132,8 @@ class App extends Component {
         
         {
           this.state.checked &&
-        <table class="table">
+          <div>
+            <table class="table">
             <tbody>
               <tr>
                   <td>IP Address</td>
@@ -194,6 +197,20 @@ class App extends Component {
               </tr>
             </tbody>
         </table>
+        
+        <table>
+          {
+            this.state.data.map((d) => (
+              <tr>
+                <td>{d.networkAddress}</td>
+                <td>{d.use}</td>
+                <td>{d.broadCastAdd}</td>
+              </tr>
+            ))
+          }
+        </table>
+          </div>
+        
         }
       </div>
     );
