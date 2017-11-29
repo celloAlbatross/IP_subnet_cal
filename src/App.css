@@ -31,6 +31,12 @@
   justify-content: space-evenly;
 }
 
+#test {
+  font-size: large;
+  color: black;
+  font-weight: bold;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
